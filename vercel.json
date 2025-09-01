@@ -1,12 +1,19 @@
 {
   "version": 2,
   "name": "checkout-syncpay",
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
+  "functions": {
+    "server.js": {
+      "runtime": "nodejs18.x",
+      "includeFiles": [
+        "index.html",
+        "css/**",
+        "js/**",
+        "fonts/**",
+        "images/**",
+        "media/**"
+      ]
     }
-  ],
+  },
   "routes": [
     {
       "src": "/(.*)",

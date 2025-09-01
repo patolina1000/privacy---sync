@@ -36,6 +36,8 @@ npm start
 4. **Deploy automático** será feito
 5. **Acesse** a URL fornecida pela Vercel
 
+> ℹ️ O arquivo `vercel.json` inclui os diretórios `css`, `js`, `fonts`, `images` e `media`, garantindo que os arquivos estáticos sejam enviados no deploy.
+
 ## 🔧 Configuração
 
 ### Credenciais SyncPay
