@@ -1,6 +1,7 @@
 /**
- * MODAL DE PAGAMENTO
- * Exibe tela de pagamento conforme design das imagens
+ * MODAL DE PAGAMENTO ATUALIZADO
+ * Exibe tela de pagamento com design moderno e funcionalidades robustas
+ * Baseado no pop-up alternativo com melhorias
  */
 
 class PaymentModal {
@@ -36,7 +37,7 @@ class PaymentModal {
                 </button>
                 <div class="payment-profile">
                     <div class="payment-profile-avatar">
-                        <img src="images/perfil.jpg" alt="Perfil">
+                        <img src="images/perfil.jpg" alt="Perfil" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMzAiIGZpbGw9IiNGNTgxNzAiLz4KPHN2ZyB4PSIxNSIgeT0iMTUiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+CjxwYXRoIGQ9Ik0xMiAyQzEzLjEgMiAxNCAyLjkgMTQgNEMxNCA1LjEgMTMuMSA2IDEyIDZDMTAuOSA2IDEwIDUuMSAxMCA0QzEwIDIuOSAxMC45IDIgMTIgMlpNMjEgOVYyMkgxNVYxM0g5VjIySDNWOUgwVjdIMjRWOUgyMVoiLz4KPHN2Zz4KPC9zdmc+';">
                     </div>
                     <div class="payment-profile-info">
                         <h3>Stella Beghini</h3>
@@ -85,6 +86,392 @@ class PaymentModal {
 
         this.overlay.appendChild(this.modal);
         document.body.appendChild(this.overlay);
+        
+        // Adicionar estilos CSS dinamicamente
+        this.addStyles();
+    }
+
+    addStyles() {
+        // Verificar se os estilos já foram adicionados
+        if (document.getElementById('payment-modal-styles')) {
+            return;
+        }
+
+        const styles = document.createElement('style');
+        styles.id = 'payment-modal-styles';
+        styles.textContent = `
+            .payment-modal-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                box-sizing: border-box;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .payment-modal-overlay.show {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .payment-modal {
+                background: white;
+                border-radius: 20px;
+                padding: 0;
+                max-width: 500px;
+                width: 90%;
+                max-height: 90vh;
+                overflow-y: auto;
+                transform: scale(0.8);
+                transition: transform 0.3s ease;
+                color: #333;
+                position: relative;
+                margin: auto;
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            }
+
+            /* Tamanho maior apenas para PC/Desktop */
+            @media (min-width: 769px) {
+                .payment-modal {
+                    max-width: 550px;
+                    width: 80%;
+                }
+            }
+
+            .payment-modal-overlay.show .payment-modal {
+                transform: scale(1);
+            }
+
+            .payment-modal-header {
+                background-image: url('../images/banner.jpg');
+                background-size: cover;
+                background-position: center;
+                padding: 20px;
+                border-radius: 20px 20px 0 0;
+                position: relative;
+                height: 140px;
+                display: flex;
+                align-items: flex-end;
+            }
+
+            .payment-modal-header::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
+                border-radius: 20px 20px 0 0;
+            }
+
+            .payment-modal-close {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: rgba(255, 255, 255, 0.9);
+                border: none;
+                color: #333;
+                font-size: 18px;
+                cursor: pointer;
+                width: 35px;
+                height: 35px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                transition: all 0.2s;
+                z-index: 2;
+            }
+
+            .payment-modal-close:hover {
+                background: white;
+                transform: scale(1.1);
+            }
+
+            .payment-profile {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                margin-right: 40px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .payment-profile-avatar {
+                width: 70px;
+                height: 70px;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 4px solid white;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            }
+
+            .payment-profile-avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .payment-profile-info h3 {
+                margin: 0;
+                font-size: 18px;
+                font-weight: 700;
+                color: white;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            }
+
+            .payment-profile-info p {
+                margin: 2px 0 0 0;
+                color: rgba(255, 255, 255, 0.9);
+                font-size: 14px;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            }
+
+            .payment-modal-body {
+                padding: 25px;
+            }
+
+            .payment-benefits {
+                margin-bottom: 20px;
+            }
+
+            .payment-benefits h4 {
+                color: #333;
+                margin: 0 0 8px 0;
+                font-size: 16px;
+                font-weight: 600;
+                text-align: left;
+            }
+
+            .payment-benefits-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .payment-benefits-list li {
+                padding: 1px 0;
+                padding-left: 25px;
+                position: relative;
+                font-size: 14px;
+                color: #666;
+                line-height: 1.2;
+            }
+
+            .payment-benefits-list li:before {
+                content: '✓';
+                position: absolute;
+                left: 0;
+                color: #F58170;
+                font-weight: bold;
+            }
+
+            .payment-plan {
+                text-align: left;
+                margin-bottom: 25px;
+                padding: 20px;
+                background: #f8f9fa;
+                border-radius: 15px;
+            }
+
+            .payment-plan-label {
+                color: #333;
+                font-size: 16px;
+                font-weight: 600;
+                margin: 0 0 5px 0;
+                text-transform: none;
+                letter-spacing: normal;
+            }
+
+            .payment-plan-duration {
+                color: #666;
+                font-size: 14px;
+                margin: 0 0 10px 0;
+            }
+
+            .payment-plan-price {
+                color: #333;
+                font-size: 28px;
+                font-weight: 700;
+                margin: 0;
+            }
+
+            .payment-pix {
+                margin-bottom: 20px;
+            }
+
+            .payment-pix-label {
+                color: #333;
+                font-size: 14px;
+                font-weight: 600;
+                margin: 0 0 15px 0;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                text-align: left;
+            }
+
+            .payment-pix-code {
+                background: #f8f9fa;
+                border: 2px solid #eee;
+                border-radius: 10px;
+                padding: 15px;
+                margin-bottom: 15px;
+                font-family: 'Courier New', monospace;
+                font-size: 12px;
+                word-break: break-all;
+                color: #666;
+                line-height: 1.4;
+            }
+
+            .payment-copy-button {
+                width: 100%;
+                background: linear-gradient(45deg, #F58170, #F9AF77);
+                color: white;
+                border: none;
+                padding: 15px;
+                border-radius: 10px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 14px;
+                letter-spacing: 0.5px;
+            }
+
+            .payment-copy-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(245, 129, 112, 0.4);
+            }
+
+            .payment-copy-button:active {
+                transform: translateY(0);
+            }
+
+            .payment-copy-button:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+                transform: none;
+            }
+
+            .payment-qr-container {
+                text-align: center;
+                margin: 20px 0;
+                padding: 20px;
+                background: white;
+                border: 2px solid #eee;
+                border-radius: 15px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                display: none;
+            }
+
+            .payment-qr-code {
+                display: inline-block;
+                padding: 15px;
+                background: white;
+                border-radius: 10px;
+            }
+
+            .payment-status {
+                text-align: center;
+                padding: 15px;
+                border-radius: 10px;
+                background: rgba(23, 162, 184, 0.1);
+                border: 1px solid rgba(23, 162, 184, 0.3);
+            }
+
+            .payment-status.success {
+                background: rgba(40, 167, 69, 0.1);
+                border-color: rgba(40, 167, 69, 0.3);
+            }
+
+            .payment-status.error {
+                background: rgba(220, 53, 69, 0.1);
+                border-color: rgba(220, 53, 69, 0.3);
+            }
+
+            .payment-status-text {
+                margin: 0;
+                font-size: 14px;
+                color: #17a2b8;
+            }
+
+            .payment-status.success .payment-status-text {
+                color: #28a745;
+            }
+
+            .payment-status.error .payment-status-text {
+                color: #dc3545;
+            }
+
+            @media (max-width: 768px) {
+                .payment-modal {
+                    width: 95%;
+                    margin: 20px;
+                }
+                
+                .payment-modal-header {
+                    height: 100px;
+                    padding: 15px;
+                }
+                
+                .payment-profile-avatar {
+                    width: 50px;
+                    height: 50px;
+                }
+                
+                .payment-profile-info h3 {
+                    font-size: 16px;
+                }
+                
+                .payment-modal-body {
+                    padding: 20px;
+                }
+                
+                .payment-plan-price {
+                    font-size: 24px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .payment-modal {
+                    width: 98%;
+                    margin: 10px;
+                }
+                
+                .payment-modal-header {
+                    height: 80px;
+                    padding: 10px;
+                }
+                
+                .payment-profile {
+                    gap: 10px;
+                }
+                
+                .payment-profile-avatar {
+                    width: 45px;
+                    height: 45px;
+                }
+                
+                .payment-profile-info h3 {
+                    font-size: 15px;
+                }
+
+                .payment-modal-body {
+                    padding: 15px;
+                }
+            }
+        `;
+
+        document.head.appendChild(styles);
     }
 
     bindEvents() {
@@ -124,17 +511,20 @@ class PaymentModal {
         this.currentTransaction = transactionData;
         this.updateModalContent(transactionData);
         
-        // Mostrar modal
+        // Mostrar modal com animação
         this.overlay.classList.add('show');
         this.isOpen = true;
         
         // Gerar QR Code se houver dados PIX
-        if (transactionData.pix_qr_code) {
-            await this.generateQRCode(transactionData.pix_qr_code);
+        if (transactionData.pix_qr_code || transactionData.pix_copy_paste || transactionData.pix_code) {
+            const pixCode = transactionData.pix_qr_code || transactionData.pix_copy_paste || transactionData.pix_code;
+            await this.generateQRCode(pixCode);
         }
 
         // Iniciar verificação de status
         this.startStatusCheck();
+        
+        console.log('✅ Modal de pagamento aberto com sucesso');
     }
 
     updateModalContent(data) {
@@ -153,6 +543,8 @@ class PaymentModal {
                 pixCode = data.pix_qr_code;
             } else if (data.pix_copy_paste) {
                 pixCode = data.pix_copy_paste;
+            } else if (data.pix_code) {
+                pixCode = data.pix_code;
             } else if (data.qr_code) {
                 pixCode = data.qr_code;
             } else {
@@ -164,14 +556,14 @@ class PaymentModal {
             // Habilitar/desabilitar botão de copiar
             const copyBtn = document.getElementById('paymentCopyButton');
             if (copyBtn) {
-                copyBtn.disabled = !pixCode || pixCode.includes('será gerado');
+                copyBtn.disabled = !pixCode || pixCode.includes('será gerado') || pixCode.includes('não disponível');
             }
         }
 
         // Atualizar status
         this.updateStatus('pending', 'Aguardando pagamento...');
         
-        console.log('Modal atualizado com dados:', data);
+        console.log('✅ Modal atualizado com dados:', data);
     }
 
     async generateQRCode(pixCode) {
@@ -179,11 +571,16 @@ class PaymentModal {
             const qrContainer = document.getElementById('paymentQRContainer');
             const qrCodeElement = document.getElementById('paymentQRCode');
             
-            if (typeof QRCode !== 'undefined' && qrCodeElement) {
-                // Limpar QR Code anterior
-                qrCodeElement.innerHTML = '';
-                
-                // Gerar novo QR Code
+            if (!qrCodeElement) {
+                console.warn('⚠️ Elemento QR Code não encontrado');
+                return;
+            }
+
+            // Limpar QR Code anterior
+            qrCodeElement.innerHTML = '';
+            
+            if (typeof QRCode !== 'undefined') {
+                // Usar QRCode.js se disponível
                 await QRCode.toCanvas(qrCodeElement, pixCode, {
                     width: 200,
                     height: 200,
@@ -193,39 +590,119 @@ class PaymentModal {
                         light: '#FFFFFF'
                     }
                 });
-                
+                console.log('✅ QR Code gerado com QRCode.js');
+            } else {
+                // Fallback para API online
+                const img = document.createElement('img');
+                img.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
+                img.alt = 'QR Code PIX';
+                img.style.maxWidth = '200px';
+                img.style.height = 'auto';
+                qrCodeElement.appendChild(img);
+                console.log('✅ QR Code gerado com API fallback');
+            }
+            
+            if (qrContainer) {
                 qrContainer.style.display = 'block';
             }
         } catch (error) {
-            console.error('Erro ao gerar QR Code:', error);
+            console.error('❌ Erro ao gerar QR Code:', error);
+            const qrContainer = document.getElementById('paymentQRContainer');
+            if (qrContainer) {
+                qrContainer.style.display = 'none';
+            }
         }
     }
 
     copyPixCode() {
         const pixCodeElement = document.getElementById('paymentPixCode');
         if (pixCodeElement) {
-            const pixCode = pixCodeElement.textContent;
+            const pixCode = pixCodeElement.textContent.trim();
             
-            navigator.clipboard.writeText(pixCode).then(() => {
-                // Feedback visual
-                const copyBtn = document.getElementById('paymentCopyButton');
-                const originalText = copyBtn.textContent;
-                
-                copyBtn.textContent = 'COPIADO!';
-                copyBtn.style.background = 'linear-gradient(45deg, #28a745, #20c997)';
-                
-                setTimeout(() => {
-                    copyBtn.textContent = originalText;
-                    copyBtn.style.background = 'linear-gradient(45deg, #F58170, #F9AF77)';
-                }, 2000);
-                
-                // Mostrar toast
-                this.showToast('Código PIX copiado!', 'success');
-            }).catch(err => {
-                console.error('Erro ao copiar:', err);
-                this.showToast('Erro ao copiar código', 'error');
-            });
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(pixCode).then(() => {
+                    this.showCopyFeedback();
+                }).catch(err => {
+                    console.error('Erro ao copiar:', err);
+                    this.fallbackCopy(pixCode);
+                });
+            } else {
+                this.fallbackCopy(pixCode);
+            }
         }
+    }
+
+    fallbackCopy(text) {
+        // Método alternativo para copiar
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            document.execCommand('copy');
+            this.showCopyFeedback();
+        } catch (err) {
+            console.error('Erro ao copiar:', err);
+            alert('Código PIX: ' + text);
+        }
+        
+        document.body.removeChild(textArea);
+    }
+
+    showCopyFeedback() {
+        const copyBtn = document.getElementById('paymentCopyButton');
+        if (copyBtn) {
+            const originalText = copyBtn.textContent;
+            copyBtn.textContent = 'COPIADO!';
+            copyBtn.style.background = 'linear-gradient(45deg, #28a745, #20c997)';
+            
+            setTimeout(() => {
+                copyBtn.textContent = originalText;
+                copyBtn.style.background = 'linear-gradient(45deg, #F58170, #F9AF77)';
+            }, 2000);
+        }
+        
+        this.showMiniToast('Código PIX copiado!');
+    }
+
+    showMiniToast(message) {
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100%);
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 10001;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        `;
+        toast.textContent = message;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.style.transform = 'translateX(-50%) translateY(0)';
+        }, 100);
+        
+        setTimeout(() => {
+            toast.style.transform = 'translateX(-50%) translateY(-100%)';
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 300);
+        }, 2000);
     }
 
     updateStatus(status, message) {
@@ -302,6 +779,8 @@ class PaymentModal {
     }
 
     close() {
+        if (!this.isOpen) return;
+        
         this.overlay.classList.remove('show');
         this.isOpen = false;
         this.stopStatusCheck();
@@ -311,7 +790,11 @@ class PaymentModal {
             if (this.overlay && this.overlay.parentNode) {
                 this.overlay.parentNode.removeChild(this.overlay);
             }
+            this.overlay = null;
+            this.modal = null;
         }, 300);
+        
+        console.log('✅ Modal de pagamento fechado');
     }
 
     formatCurrency(amount) {
@@ -330,86 +813,8 @@ class PaymentModal {
     }
 
     showToast(message, type = 'info') {
-        // Usar SweetAlert se disponível
-        if (typeof swal !== 'undefined') {
-            try {
-                swal({
-                    title: message,
-                    icon: type === 'success' ? 'success' : type === 'error' ? 'error' : 'info',
-                    timer: 3000,
-                    buttons: false
-                }).then((result) => {
-                    // Verificar se result existe antes de tentar acessar propriedades
-                    if (result && typeof result === 'object' && 'value' in result) {
-                        // Processar resultado se necessário
-                        console.log('Toast result:', result.value);
-                    } else {
-                        // SweetAlert pode retornar undefined em alguns casos
-                        console.log('Toast completed without result value');
-                    }
-                }).catch((error) => {
-                    // Capturar erros do SweetAlert
-                    console.warn('SweetAlert toast error:', error);
-                });
-            } catch (error) {
-                console.warn('Erro ao inicializar SweetAlert:', error);
-                // Fallback para toast nativo
-                this.showNativeToast(message, type);
-            }
-        } else {
-            // Fallback para toast nativo
-            this.showNativeToast(message, type);
-        }
-    }
-
-    showNativeToast(message, type = 'info') {
-        // Criar toast nativo como alternativa
-        const toast = document.createElement('div');
-        toast.className = `payment-toast payment-toast-${type}`;
-        toast.innerHTML = `
-            <div class="payment-toast-content">
-                <span class="payment-toast-icon">
-                    ${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}
-                </span>
-                <span class="payment-toast-message">${message}</span>
-            </div>
-        `;
-        
-        // Adicionar estilos inline
-        toast.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 10000;
-            padding: 15px 20px;
-            border-radius: 8px;
-            color: white;
-            font-weight: 500;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            max-width: 300px;
-            background: ${type === 'success' ? 'linear-gradient(45deg, #28a745, #20c997)' : 
-                       type === 'error' ? 'linear-gradient(45deg, #dc3545, #c82333)' : 
-                       'linear-gradient(45deg, #17a2b8, #138496)'};
-        `;
-        
-        document.body.appendChild(toast);
-        
-        // Animar entrada
-        setTimeout(() => {
-            toast.style.transform = 'translateX(0)';
-        }, 100);
-        
-        // Remover após 3 segundos
-        setTimeout(() => {
-            toast.style.transform = 'translateX(100%)';
-            setTimeout(() => {
-                if (toast.parentNode) {
-                    toast.parentNode.removeChild(toast);
-                }
-            }, 300);
-        }, 3000);
+        // Usar o novo sistema de toast mais elegante
+        this.showMiniToast(message);
     }
 }
 
@@ -439,7 +844,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         const result = await originalCreateCashIn.call(this, cashInData);
                         
                         // Mostrar modal de pagamento após sucesso
-                        if (result && (result.pix_qr_code || result.pix_copy_paste)) {
+                        if (result && (result.pix_qr_code || result.pix_copy_paste || result.pix_code)) {
                             setTimeout(() => {
                                 window.showPaymentModal({
                                     ...result,
@@ -450,11 +855,40 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         return result;
                     } catch (error) {
-                        console.error('Erro no cash-in:', error);
+                        console.error('❌ Erro no cash-in:', error);
                         throw error;
                     }
                 };
             }
         }
+        
+        // Verificar se o objeto syncPay existe e atualizar o método showPixModal
+        if (window.syncPay && window.syncPay.showPixModal) {
+            const originalShowPixModal = window.syncPay.showPixModal;
+            
+            window.syncPay.showPixModal = function(data) {
+                try {
+                    if (window.showPaymentModal && typeof window.showPaymentModal === 'function') {
+                        // Usar o modal atualizado
+                        window.showPaymentModal({
+                            pix_qr_code: data.pix_code,
+                            pix_copy_paste: data.pix_code,
+                            amount: data.amount || 0,
+                            identifier: data.id,
+                            status: 'pending'
+                        });
+                    } else {
+                        // Fallback para o método original
+                        originalShowPixModal.call(this, data);
+                    }
+                } catch (error) {
+                    console.error('❌ Erro ao mostrar modal PIX:', error);
+                    // Fallback final
+                    alert('PIX gerado! Código: ' + (data.pix_code ? data.pix_code.substring(0, 50) + '...' : 'Não disponível'));
+                }
+            };
+        }
+        
+        console.log('✅ Integração com SyncPay atualizada para usar modal moderno');
     }, 1000);
 });
